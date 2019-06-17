@@ -1,0 +1,48 @@
+/* small screens */
+body{
+  text-align: center;
+}
+.logo{
+  width: 150px;
+  height: auto;
+  text-align: center;
+
+}
+
+ul {
+    text-align: center;
+    list-style: none;
+ 
+}
+
+/* tablet - medium screens */
+@media screen and (min-width: 520px) {
+
+ul {
+    text-align: right;
+    list-style: none;
+    display: inline;
+}
+
+.logo{
+  width: 150px;
+  height: auto;
+  display: block;
+  float: left;
+}
+
+h1{
+  padding-top: 100px;
+  text-align: center;
+}
+
+.btn-ready{
+  text-align: center;
+  width: 150;
+}
+
+main{
+  text-align: center;
+}
+
+}
