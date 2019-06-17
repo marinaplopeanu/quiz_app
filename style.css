@@ -1,48 +1,52 @@
 /* small screens */
-body{
+body {
   text-align: center;
 }
-.logo{
+
+.logo {
   width: 150px;
   height: auto;
   text-align: center;
 
 }
 
-ul {
-    text-align: center;
-    list-style: none;
- 
+header ul {
+  text-align: center;
+  list-style: none;
+
 }
 
 /* tablet - medium screens */
 @media screen and (min-width: 520px) {
 
-ul {
+  header ul {
     text-align: right;
     list-style: none;
     display: inline;
-}
+  }
 
-.logo{
-  width: 150px;
-  height: auto;
-  display: block;
-  float: left;
-}
+  .logo {
+    width: 150px;
+    height: auto;
+    display: block;
+    float: left;
+  }
 
-h1{
-  padding-top: 100px;
-  text-align: center;
-}
+  h1 {
+    padding-top: 100px;
+    text-align: center;
+  }
 
-.btn-ready{
-  text-align: center;
-  width: 150;
-}
+  .btn-ready {
+    text-align: center;
+    width: 150;
+  }
 
-main{
-  text-align: center;
-}
+  .question-answer-form {
+    text-align: center;
+  }
 
-}
+  .answer {
+    text-align: left;
+    font-size: 16px;
+  }
