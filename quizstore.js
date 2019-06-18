@@ -603,3 +603,18 @@ const STORE = [
         correctAnswer: [0, 1, 2, 3, 4]
     }
 ];
+
+console.log(Object.keys(STORE));
+
+//get a list of 10 random questions
+function tenRandomQuestions(){
+    let randomQuestions=[];
+      for (let i = 0; i < STORE.length; i++) {
+        console.log(STORE[i]);
+        
+      }
+    //   return randomQuestions;
+      
+  }
+
+
