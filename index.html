@@ -8,7 +8,7 @@
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body class = 'quizBody'>
   <header role="banner">
     <a href="index.html">
       <img class="logo" src="https://images-na.ssl-images-amazon.com/images/I/71Mq8UnOjjL.png" alt="lady liberty" />
@@ -22,25 +22,16 @@
   </header>
 
   <main role="main" class="landing-page">
-    <h1>Ready to test your civics knowledge?</h1>
-    <button type="submit" class="btn-ready">Ready!</button>
+    <div class="start">
+      <h1>Ready to test your civics knowledge?</h1>
+      <button type="submit" id="btn-ready">Ready!</button>
+    </div>
+
   </main>
+  <!-- populate the questions from js.  -->
+  <div class="question-answer-form"></div>
 
-  <form class="question-answer-form">
-    <h3 class="question">The idea of self-government is in the first three words of the Constitution. What are these
-      words?</h3>
-    <ul class="answer">
-      <li>liberty for all</li>
-      <li>we the citizen</li>
-      <li>justice for all</li>
-      <li>we the people</li>
-      <li>libety and happiness</li>
-    </ul>
-    <button>Submit</button>
-  </form>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="script.js"></script>
   <script src="quizstore.js"></script>
 </body>
