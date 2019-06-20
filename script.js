@@ -7,22 +7,22 @@ function random100() {
 }
 
 // function that creates an array containing 10 random numbers from 1 to 100.
-function createRandomList() {
-    let randomList = [];
-    for (let i = 0; i < 10; i++) {
-        randomList.push(random100());
-    }
-    return randomList;
-}
+// function createRandomList() {
+//     let randomList = [];
+//     for (let i = 0; i < 10; i++) {
+//         randomList.push(random100());
+//     }
+//     return randomList;
+// }
 
-let myRandomNumbers = createRandomList(0);
-console.log("my random list", myRandomNumbers);
+// let myRandomNumbers = createRandomList(0);
+// console.log("my random list", myRandomNumbers);
 
 //generate question html
 function generateQuestion() {
     return `<div class="question-${questionNumber}">
             <h2>${STORE[questionNumber].question}</h2>
-        <form onsubmit="userSelectAnswer()">
+        <form>
             <fieldset>
             <label class="answerOption">
                 <input type="radio" value=0 name="answer" required>
@@ -51,17 +51,17 @@ function generateQuestion() {
 }
 
 //render the questions to dom when pressing ready!
-
 function startQuiz() {
     $("#btn-ready").on("click", function (event) {
         $(".quizBody").html(generateQuestion());
+        userSelectAnswer()
     });
 }
 
 //users feedback. select answer
 //what happens after you press submit
-function userSelectAnswer() {
-    // $("form").on("submit", function() {
+function userSelectAnswer() { 
+    $("form").on("submit", function() {
     event.preventDefault();
 
     let selected = $('input[value]:checked');
@@ -77,19 +77,16 @@ function userSelectAnswer() {
         alert("correct answer");
         countTenQuestions(true)
         correctAnswerSelected()
-   
-
     } else {
         selected.parent().addClass("wrong");
         alert('wrong answer')
         countTenQuestions(false)
         wrongAnswerSelected(correctAnswer.map(index => STORE[questionNumber].answers[index]));
-
-
     }
     renderNextQuestion()
-    // });
+    });
 }
+
 //counter 
 function countTenQuestions(valid) {
     console.log('the answer is', valid)
@@ -103,14 +100,15 @@ function countTenQuestions(valid) {
 function renderNextQuestion(){
     $('.module').on('click', '.nextButton', function (){
         console.log('please work!')
-
+        $("").html(generateQuestion());
+        // userSelectAnswer()
+        renderNextQuestion()
+        
     })
 }
 
 //what happens if the users press the wrong answer
 function wrongAnswerSelected(correctAnswer) {
-
-
      $("form").html(`<div class="answered-wrong module">
     <p>Wrong!<br> The correct answer is <span>"${correctAnswer}"</span></p>
       <button type=button class="nextButton">Next</button>
@@ -119,7 +117,7 @@ function wrongAnswerSelected(correctAnswer) {
 
 //what happens if the users press the right answer
 function correctAnswerSelected() {
-    let correctAnswer = `${STORE[questionNumber].correctAnswer}`;
+    let correctAnswer = STORE[questionNumber].correctAnswer;
     $("form").html(`<div class="answered-correct module">
     <p>Correct! <br> </p>
       <button type=button class="nextButton">Next</button>
