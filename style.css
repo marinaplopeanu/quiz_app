@@ -16,6 +16,20 @@ header ul {
 
 }
 
+span {
+  text-align: center;
+}
+
+.submitButton {
+  display: block;
+  color: red;
+}
+
+ .answerOption {
+    display: block;
+    text-align: left;
+  }
+
 /* tablet - medium screens */
 @media screen and (min-width: 520px) {
 
@@ -50,3 +64,4 @@ header ul {
     text-align: left;
     font-size: 16px;
   }
+}
