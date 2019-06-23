@@ -1,134 +1,217 @@
-let questionNumber = random100();
-let score = 0;
+let correct = 0;
+let currentQuestion = 0;
+const questionBank = [];
 
-//basic function for generating a random number from 1 to 100
-function random100() {
-    return Math.floor(Math.random() * 100) + 1;
-}
 
-// function that creates an array containing 10 random numbers from 1 to 100.
-function createRandomList() {
-    let randomList = [];
-    for (let i = 0; i < 10; i++) {
-        randomList.push(random100());
+//generate and array of 10 random questions from STORE. 
+function generateQuestionList() {
+    // return Array.from({
+    //     length: 2
+    // }, () => Math.floor(Math.random() * 94) + 1).map(rn => {
+    //     return STORE[rn];
+    // })
+
+    var arr = []
+    while (arr.length < 10) {
+        var r = Math.floor(Math.random() * 94) + 1;
+        if (arr.indexOf(r) === -1) arr.push(r);
     }
-    return randomList;
+    console.log('arr: ', arr);
+    let arr_returned = [];
+    for (let index = 0; index < STORE.length; index++) {
+        if (arr.includes(index)) {
+            const element = STORE[index];
+            arr_returned.push(element);
+        }
+    }
+     console.log('the random questions: ', arr_returned);
+     return arr_returned;
+
 }
 
-let myRandomNumbers = createRandomList(0);
-console.log("my random list", myRandomNumbers);
-
-//generate question html
-function generateQuestion() {
-    return `<div class="question-${questionNumber}">
-            <h2>${STORE[questionNumber].question}</h2>
-        <form onsubmit="userSelectAnswer()">
-            <fieldset>
-            <label class="answerOption">
-                <input type="radio" value=0 name="answer" required>
-                <span>${STORE[questionNumber].answers[0]}</span>
-            </label>
-            <label class="answerOption">
-                <input type="radio" value=1 name="answer" required>
-                <span>${STORE[questionNumber].answers[1]}</span>
-            </label>
-            <label class="answerOption">
-                <input type="radio" value=2 name="answer" required>
-                <span>${STORE[questionNumber].answers[2]}</span>
-            </label>
-            <label class="answerOption">
-                <input type="radio" value=3 name="answer" required>
-                <span>${STORE[questionNumber].answers[3]}</span>
-            </label>
-            <label class="answerOption">
-                <input type="radio" value=4 name="answer" required>
-                <span>${STORE[questionNumber].answers[4]}</span>
-            </label>
-            <button type="submit" class="submitButton">Submit</button>
-            </fieldset>
-        </form>
-        </div>`;
-}
-
-//render the questions to dom when pressing ready!
-
+//start quiz when pressing the ready button
 function startQuiz() {
-    $("#btn-ready").on("click", function (event) {
-        $(".quizBody").html(generateQuestion());
+    $(".btn-ready").on("click", function (event) {
+        console.log("you clicked ready btn -the questions start")
+        // generateQuestionList();
+        questionList = generateQuestionList();
+        displayQuestion();
+        userSelectAnswer();
+        
     });
 }
 
-//users feedback. select answer
-//what happens after you press submit
+
+//build the html for questions and answers
+function generateQuestion() {
+
+    console.log('generateQuestion ran');
+    console.log(questionList);
+
+
+    return `
+    <div>
+      <ul class="stats">
+        <li>Question: ${currentQuestion+1}/10</li>
+        <li>${correct} Correct</li>
+      </ul>
+
+    <h2>${questionList[currentQuestion].question}</h2>
+
+      <form>
+          <fieldset>
+          <label class="answerOption">
+              <input type="radio" value=0 name="answer" required>
+              <span>${questionList[currentQuestion].answers[0]}</span>
+          </label>
+          <label class="answerOption">
+              <input type="radio" value=1 name="answer" required>
+              <span>${questionList[currentQuestion].answers[1]}</span>
+          </label>
+          <label class="answerOption">
+              <input type="radio" value=2 name="answer" required>
+              <span>${questionList[currentQuestion].answers[2]}</span>
+          </label>
+          <label class="answerOption">
+              <input type="radio" value=3 name="answer" required>
+              <span>${questionList[currentQuestion].answers[3]}</span>
+          </label>
+          <label class="answerOption">
+              <input type="radio" value=4 name="answer" required>
+              <span>${questionList[currentQuestion].answers[4]}</span>
+          </label>
+          <button type="submit" class="btn-submit">Submit</button>
+          </fieldset>
+      </form>
+    </div>`;
+}
+
+
+//what happens after you press submit on an answer
 function userSelectAnswer() {
-    // $("form").on("submit", function() {
-    event.preventDefault();
+    $("form").on("submit", function (event) {
+        event.preventDefault();
+        let selected = $('input[value]:checked');
+        let answer = parseInt(selected.val());
+        let correctAnswer = questionList[currentQuestion].correctAnswer;
 
-    let selected = $('input[value]:checked');
-    let answer = selected.val();
-    let correctAnswer = STORE[questionNumber].correctAnswer;
-    console.log(answer);
-    console.log("correct answer", STORE[questionNumber].correctAnswer);
+        console.log('answer', answer);
+        console.log("correct answer", correctAnswer);
 
-    console.log(`${STORE[questionNumber].answers[answer]}`);
-
-    if (correctAnswer.includes(answer)) {
-        selected.parent().addClass("correct");
-        alert("correct answer");
-        countTenQuestions(true)
-        correctAnswerSelected()
-   
-
-    } else {
-        selected.parent().addClass("wrong");
-        alert('wrong answer')
-        countTenQuestions(false)
-        wrongAnswerSelected(correctAnswer.map(index => STORE[questionNumber].answers[index]));
-
-
-    }
-    renderNextQuestion()
-    // });
+        if (correctAnswer.includes(answer)) {
+            selected.parent().addClass("correct");
+            // alert("correct answer");
+            correct++;
+            correctAnswerSelected()
+        } else {
+            selected.parent().addClass("wrong");
+            wrongAnswerSelected(correctAnswer.map(index => questionList[currentQuestion].answers[index]));
+        }
+        renderNextQuestion()
+    });
 }
-//counter 
-function countTenQuestions(valid) {
-    console.log('the answer is', valid)
-    if (valid) {
-        score++
-    }
-}
-//update score text
-//render next question
 
-function renderNextQuestion(){
-    $('.module').on('click', '.nextButton', function (){
-        console.log('please work!')
 
-    })
-}
 
 //what happens if the users press the wrong answer
 function wrongAnswerSelected(correctAnswer) {
-
-
-     $("form").html(`<div class="answered-wrong module">
+    $("h2").remove();
+    $("form").html(`<div class="answered-wrong module">
+    <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_disapointed.JPG">
     <p>Wrong!<br> The correct answer is <span>"${correctAnswer}"</span></p>
-      <button type=button class="nextButton">Next</button>
+      <button type="button" class="btn-next">Next</button>
     </div>`);
 }
 
 //what happens if the users press the right answer
 function correctAnswerSelected() {
-    let correctAnswer = `${STORE[questionNumber].correctAnswer}`;
+    $("h2").remove();
     $("form").html(`<div class="answered-correct module">
+    <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_thumbs_up.JPG">
     <p>Correct! <br> </p>
-      <button type=button class="nextButton">Next</button>
+      <button type="button" class="btn-next">Next</button>
     </div>`);
 }
 
 
+//display the question
+function displayQuestion() {
+
+    // if (currentQuestion < questionList.length) {
+    //     console.log("length", questionList.length);
+    //     console.log("current question", currentQuestion);
+        $(".quizBody").html(generateQuestion());
+       
+    // } else {
+    //     // display the results
+    //     console.log('done 10')
+    //     displayResults()
+    //     // $(".quizBpdy").html(displayResults());
+    //     // displayQuestion()
+    // }
+}
+
+//update score text
+//render next question
+function renderNextQuestion() {
+   
+        $('.btn-next').on('click', function (event) {
+            // displayResults();
+
+            console.log('you clicked next!');
+            console.log('currentQuestion:', currentQuestion);
+            console.log('questionList.length', questionList.length);
+             if (currentQuestion < questionList.length-1) {
+            // event.preventDefault();
+            console.log('you have more questions left!')
+            currentQuestion++;
+            displayQuestion();
+            userSelectAnswer();
+                } else {
+                    console.log('youa re done!')
+                    displayResults();
+                    restartQuiz();
+                }
+
+
+        })
+
+}
+
+//these are the last pages that don't want to display
+function displayResults() {
+
+    console.log("displayResults ran")
+    console.log("correct is", correct)
+    $('.stats').hide();
+    if (correct >= 6) {
+        $("form").html(`<div class="results correctFeedback">
+            <h3>You're on fire!</h3>
+            <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_congrats.JPG?raw=true">
+            <p>You got ${correct} / 10</p>
+            <p>You're ready to become an US citizen!</p>
+            <button class="btn-restart">Restart Quiz</button>
+            </div>`)
+    } else {
+        $("form").html(`<div class="results correctFeedback">
+        <h3>You need to practice some more!</h3>
+        <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_wrong.JPG">
+        <p>You got ${correct}/ 10</p>
+        <button class="btn-restart">Restart Quiz</button></div>`)
+    }
+
+}
+// restartQuiz - all globals reset and call start functions
+function restartQuiz() {
+    console.log('you clicked reset quiz!')
+    $(".btn-restart").on("click", function (event) {
+        console.log('you clicked reset quiz!');
+        window.location.reload(true);
+    });
+}
+
 function createQuiz() {
     startQuiz();
-    // userSelectAnswer();
+    userSelectAnswer();
 }
 $(createQuiz);
