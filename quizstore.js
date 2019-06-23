@@ -1,35 +1,48 @@
 //typeahead for state -> same answers are based on state (all commended now)
+//
 const STORE = [
+    //A: Principles of American Democracy
     //1
     {
         question: 'What is the supreme law of the land?',
         answers: ['the Supreme Court', 'the Bill of Rights', 'the Constitution', 'the President', 'the Declaration of Independence'],
         //indexOf asnwer 'the Constitution' = 2
-        correctAnswer: [2]
+        correctAnswer: [2],
+        icon: 'https://www.loc.gov/exhibits/creating-the-united-states/Constitution/ConstitutionLegacy/Assets/2a07727u_enlarge.jpg',
+        alt: 'the constitution'
     },
     //2
     {
         question: 'What does the Constitution do?',
-        answers: ['sets up the government', 'defines America', 'defines the government', 'protects basic rights of Americans', 'sets up the government'],
-        correctAnswer: [0, 2, 3]
+        answers: ['sets up the government', 'defines America', 'tells you how to live your life', 'protects basic rights of Americans', 'sets up the government'],
+        correctAnswer: [0, 2, 3],
+        icon: 'https://www.loc.gov/exhibits/creating-the-united-states/Constitution/ConstitutionLegacy/Assets/2a07727u_enlarge.jpg',
+        alt: 'the constitution'
     },
     //3
     {
         question: 'The idea of self-government is in the first three words of the Constitution. What are these words?',
         answers: ['liberty for all', 'we the citizens', 'justice for all', 'we the people', 'libety and happiness'],
-        correctAnswer: [3]
+        correctAnswer: [3],
+        icon: 'https://www.loc.gov/exhibits/creating-the-united-states/Constitution/ConstitutionLegacy/Assets/2a07727u_enlarge.jpg',
+        alt: 'the constitution'
     },
     //4
     {
         question: 'What is an amendment?',
         answers: ['rewriting the Constitution', 'part of the Electoral College', 'a vote in Congress', 'a change to the Constitution', 'the process by which Supreme Court Justices are chosen'],
-        correctAnswer: [3]
+        correctAnswer: [3],
+        icon: 'https://blogs.princeton.edu/mudd/wp-content/uploads/sites/41/mt/FDR%20Press%20release%20image.jpg',
+        alt: 'amendment'
+
     },
     //5
     {
         question: 'What do we call the first ten amendments to the Constitution?',
         answers: ['the Bill of Lading', 'the Bill of Rights', 'the List of Ten', 'the Ten Commandments', 'the Ten Amendments'],
-        correctAnswer: [1]
+        correctAnswer: [1],
+        icon: 'https://blogs.princeton.edu/mudd/wp-content/uploads/sites/41/mt/FDR%20Press%20release%20image.jpg',
+        alt: 'amendment'
     },
     //6
     {
@@ -73,6 +86,7 @@ const STORE = [
         answers: ['Everyone must follow the law.', 'Leaders must obey the law.', 'Government must obey the law.', 'No one is above the law.', 'All of the above.'],
         correctAnswer: [0, 1, 2, 3, 4]
     },
+    //B: System of Government
     //13
     {
         question: 'Name one branch or part of the government.',
@@ -269,7 +283,7 @@ const STORE = [
     {
         question: 'What are the two major political parties in the United States?',
         answers: ['Green and Republican', 'Republican and Libertarian', 'Democratic and Republican', 'Libertarian and Communist', 'Libertarian and Democratic'],
-        correctAnswer: [3]
+        correctAnswer: [2]
     },
     //46
     {
@@ -344,6 +358,7 @@ const STORE = [
         answers: ['between eighteen (18) and twenty-six (26)', 'at age 16', 'at age 30', 'at age 27', 'anytime'],
         correctAnswer: [1]
     },
+    //d.  Colonial Period and Independence
     //58
     {
         question: 'What is one reason colonists came to America?',
@@ -423,10 +438,11 @@ const STORE = [
         correctAnswer: [4]
     },
     //71
+    //: 1800s
     {
         question: 'What territory did the United States buy from France in 1803?',
         answers: ['Louisiana', 'Alaska', 'Canada', 'the Northwest Territory', 'Mexico'],
-        correctAnswer: [1]
+        correctAnswer: [0]
     },
     //72
     {
@@ -465,6 +481,7 @@ const STORE = [
         correctAnswer: [1]
     },
     //78
+    //Recent American History and Other Important Historical Information
     {
         question: 'Name one war fought by the United States in the 1900s.',
         answers: ['The American Revolution', 'The War of 1812', 'World War I', 'The Civil War', 'World War II'],
@@ -519,6 +536,7 @@ const STORE = [
         correctAnswer: [1]
     },
     //87
+    //Geography
     {
         question: 'What is one American Indian tribe in the United States.',
         answers: ['Chitimacha', 'Hookah', 'Cherokee', 'Mohegan', 'Padron'],
@@ -538,7 +556,7 @@ const STORE = [
     },
     //90
     {
-        question: 'What ocean is on the West Coast of the United States?',
+        question: 'What ocean is on the East Coast of the United States?',
         answers: ['Arctic', 'Atlantic', 'Indian', 'Pacific', 'Southern Ocean'],
         correctAnswer: [1]
     },
@@ -573,6 +591,7 @@ const STORE = [
         correctAnswer: [0]
     },
     //96
+    //symnbols
     {
         question: 'Why does the flag have 13 stripes?',
         answers: ['thirteen Founding Fathers', 'thirteen original flavors', 'a baker\'s dozen', 'thirteen original colonies', 'thirteen rivers'],
@@ -591,6 +610,7 @@ const STORE = [
         correctAnswer: [0]
     },
     //99
+    //holidays
     {
         question: 'When do we celebrate Independence Day?',
         answers: ['December 25', 'November 8', 'June 4', 'January 4', 'July 4'],
@@ -599,22 +619,39 @@ const STORE = [
     //100
     {
         question: 'Which ones are national U.S holidays?',
-        answers: ['New Year’s Day', 'Presidents\' Day', ' Memorial Day', 'Independence Day', 'All off the above'],
-        correctAnswer: [0, 1, 2, 3, 4]
+        answers: ['Earth\' Day', 'Presidents\' Day', ' April Fool\'s Day', 'No Housework Day', 'International Beaver Day'],
+        correctAnswer: [1]
     }
 ];
 
-console.log(Object.keys(STORE));
+// console.log(Object.keys(STORE));
 
 //get a list of 10 random questions
-function tenRandomQuestions(){
-    let randomQuestions=[];
-      for (let i = 0; i < STORE.length; i++) {
+function tenRandomQuestions() {
+    let randomQuestions = [];
+    for (let i = 0; i < STORE.length; i++) {
         console.log(STORE[i]);
-        
-      }
+
+    }
     //   return randomQuestions;
-      
-  }
+
+}
 
 
+// correct = 'https://previews.123rf.com/images/nazlisart/nazlisart1404/nazlisart140400013/27899104-vector-cartoon-illustration-of-uncle-sam-holding-a-waving-american-flagand-pointing-i-want-you-like-.jpg'
+
+// wrong = 'https://vignette.wikia.nocookie.net/pawnstarsthegame/images/5/5f/Uncle_Sam.png/revision/latest?cb=20111214173045'//typeahead for state -> same answers are based on state (all commended now)
+
+//AMERICAN GOVERNMENT
+//A: Principles of American Democracy - https://www.loc.gov/exhibits/creating-the-united-states/Constitution/ConstitutionLegacy/Assets/2a07727u_enlarge.jpg
+//B: System of Government
+//C: Rights and Responsibilities
+
+//AMERICAN HISTORY
+//A: Colonial Period and Independence
+//B: 1800 s
+//C: Recent American History and Other Important Historical Information
+//
+//A: Geography
+//B: Symbols
+//C: Holidays
