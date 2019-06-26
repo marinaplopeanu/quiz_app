@@ -1,5 +1,6 @@
 /* small screens */
 body {
+  padding-top: 20px;
   text-align: center;
   font-family: "Roboto", sans-serif;
   color: #2e343b;
@@ -28,7 +29,7 @@ body {
   
 }
 
-  h1 {
+  .title {
     padding-top: 30px;
     padding-bottom: 30px;
     text-align: center;
@@ -37,7 +38,7 @@ body {
 
   /* start quiz button */
 
-  .btn-ready, .btn-next{
+  .btn-ready{
     font-family: "Roboto",sans-serif;
     font-size: 16px;
     font-weight: 600px;
@@ -49,6 +50,25 @@ body {
     color: #fff;
     border-radius: 5px;
     border: 1px #ab3c3c;
+    cursor: pointer;
+  }
+
+  .btn-next{
+    margin:0 auto;
+    display: flex;
+    justify-content: center;
+    font-family: "Roboto",sans-serif;
+    font-size: 16px;
+    font-weight: 600px;
+    height: 40px;
+    width: 150px;
+    box-shadow: 0 6px #ab3c3c;
+    background: #cb4e4e;
+    transition: none;
+    color: #fff;
+    border-radius: 5px;
+    border: 1px #ab3c3c;
+    cursor: pointer;
   }
   .btn{
     border-radius: 20px;
@@ -76,6 +96,7 @@ body {
     color: #fff;
     border-radius: 5px;
     border: 1px #16405B;
+    cursor: pointer;
   }
 
   .btn2 {
@@ -113,6 +134,7 @@ fieldset{
   margin: 10px;
   border-radius: 3px;
   box-shadow: 3px 3px #939393;
+  cursor: pointer;
 }
 
 .answerOption:hover{
@@ -141,6 +163,7 @@ fieldset{
     color: #fff;
     border-radius: 5px;
     border: 1px #ab3c3c;
+    cursor: pointer;
   }
 
   .btn2 {
@@ -157,21 +180,24 @@ fieldset{
     top: 6px;
   }
 
-
   .image{
-    width: 60%;
-    padding-top: 20px;
+    width: 250px;
+    padding: 10px;
   }
-
+  
+span{
+  font-weight: 700px;
+}
 /* tablet - medium screens */
 @media screen and (min-width: 520px) {
 .answerOption {
-  width: 70%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
-
-  
 }
-
+.image{
+  width: 35%;;
+  padding: 20px;
+}
 
 }
