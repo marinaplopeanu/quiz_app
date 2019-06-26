@@ -13,7 +13,7 @@ function generateQuestionList() {
 
     var arr = []
     while (arr.length < 10) {
-        var r = Math.floor(Math.random() * 94) + 1;
+        var r = Math.floor(Math.random() * 96) + 1;
         if (arr.indexOf(r) === -1) arr.push(r);
     }
     console.log('arr: ', arr);
@@ -48,18 +48,18 @@ function generateQuestion() {
     console.log('generateQuestion ran');
     console.log(questionList);
 
-
     return `
-    <div>
-      <ul class="stats">
+    
+    <form>
+    <fieldset>
+      <img class="logo" src="https://github.com/marinaplopeanu/quiz_app/blob/master/america.JPG?raw=true" alt="lady liberty" />
+      
+      <ul class="score">
         <li>Question: ${currentQuestion+1}/10</li>
         <li>${correct} Correct</li>
       </ul>
+    <h2 class="question-text">${questionList[currentQuestion].question}</h2>
 
-    <h2>${questionList[currentQuestion].question}</h2>
-
-      <form>
-          <fieldset>
           <label class="answerOption">
               <input type="radio" value=0 name="answer" required>
               <span>${questionList[currentQuestion].answers[0]}</span>
@@ -80,12 +80,12 @@ function generateQuestion() {
               <input type="radio" value=4 name="answer" required>
               <span>${questionList[currentQuestion].answers[4]}</span>
           </label>
-          <button type="submit" class="btn-submit">Submit</button>
+          <button type="submit" class="btn-submit btn2">Submit</button>
           </fieldset>
-      </form>
-    </div>`;
+      </form>`;
+    
+   
 }
-
 
 //what happens after you press submit on an answer
 function userSelectAnswer() {
@@ -101,7 +101,7 @@ function userSelectAnswer() {
         if (correctAnswer.includes(answer)) {
             selected.parent().addClass("correct");
             // alert("correct answer");
-            correct++;
+            changeScore();
             correctAnswerSelected()
         } else {
             selected.parent().addClass("wrong");
@@ -112,24 +112,33 @@ function userSelectAnswer() {
 }
 
 
+function changeScore() {
+    correct ++;
+  }
 
 //what happens if the users press the wrong answer
 function wrongAnswerSelected(correctAnswer) {
     $("h2").remove();
+    $(".logo").remove();
+
     $("form").html(`<div class="answered-wrong module">
-    <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_disapointed.JPG">
-    <p>Wrong!<br> The correct answer is <span>"${correctAnswer}"</span></p>
-      <button type="button" class="btn-next">Next</button>
+    <h1>Wrong!</h1>
+    <img src="patriotic_eagle_disapointed.JPG" alt="patriotic eagle disapointed" class="image">
+
+     <p>The correct answer is <b>"${correctAnswer}"</b></p>
+      <button type="button" class="btn-next btn">Next</button>
     </div>`);
 }
 
 //what happens if the users press the right answer
 function correctAnswerSelected() {
     $("h2").remove();
+    $(".logo").remove();
+
     $("form").html(`<div class="answered-correct module">
-    <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_thumbs_up.JPG">
-    <p>Correct! <br> </p>
-      <button type="button" class="btn-next">Next</button>
+    <h1>Correct!</h1>
+    <img src="patriotic_eagle_thumbs_up.JPG" alt="patriotic eagle thumbs up" class="image">
+      <button type="button" class="btn-next btn">Next</button>
     </div>`);
 }
 
@@ -183,21 +192,20 @@ function displayResults() {
 
     console.log("displayResults ran")
     console.log("correct is", correct)
-    $('.stats').hide();
+    $('.score').hide();
     if (correct >= 6) {
         $("form").html(`<div class="results correctFeedback">
-            <h3>You're on fire!</h3>
-            <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_congrats.JPG?raw=true">
-            <p>You got ${correct} / 10</p>
-            <p>You're ready to become an US citizen!</p>
-            <button class="btn-restart">Restart Quiz</button>
+            <h1>You're on fire!</h1>
+            <img src="patriotic_eagle_congrats.JPG" alt="patriotic eagle congrats" class="image">
+            <h2>You're ready to become an US citizen!</h2>
+            <button class="btn-restart btn2">Restart Quiz</button>
             </div>`)
     } else {
         $("form").html(`<div class="results correctFeedback">
-        <h3>You need to practice some more!</h3>
-        <img src="https://github.com/marinaplopeanu/quiz_app/blob/master/patriotic_eagle_wrong.JPG">
-        <p>You got ${correct}/ 10</p>
-        <button class="btn-restart">Restart Quiz</button></div>`)
+        <h1>You need to practice some more!</h1>
+        <img src="patriotic_eagle_wrong.JPG" alt="patriotic eagle wrong" class="image">
+        <h3>You got ${correct} questions right out of 10</h3>
+        <button class="btn-restart btn2">Restart Quiz</button></div>`)
     }
 
 }
